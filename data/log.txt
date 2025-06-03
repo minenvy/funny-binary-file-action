@@ -1,0 +1,40 @@
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Thoat
+He thong: Chon mot gia tri (0-5): 
+Nguoi dung: 1
+He thong: Thao tac du lieu: 
+He thong: 1. Thao tac khach hang
+He thong: 2. Thao tac chi so dien
+He thong: 3. Thao tac gia dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 1
+He thong: Menu khach hang: 
+He thong: 1. Them khach hang
+He thong: 2. Cap nhat khach hang
+He thong: 3. Xoa khach hang
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 0
+He thong: Thao tac du lieu: 
+He thong: 1. Thao tac khach hang
+He thong: 2. Thao tac chi so dien
+He thong: 3. Thao tac gia dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 0
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Thoat
+He thong: Chon mot gia tri (0-5): 
+Nguoi dung: 0
+He thong: Thoat chuong trinh!

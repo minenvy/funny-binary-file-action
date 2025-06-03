@@ -1,0 +1,117 @@
+{
+  "1": {
+    "step": "1",
+    "parent_step": "0",
+    "action_name": "show_main_menu_action"
+  },
+  "2": {
+    "step": "2",
+    "parent_step": "15",
+    "action_name": "show_customer_menu_action"
+  },
+  "3": {
+    "step": "3",
+    "parent_step": "15",
+    "action_name": "show_meter_menu_action"
+  },
+  "4": {
+    "step": "4",
+    "parent_step": "15",
+    "action_name": "show_price_menu_action"
+  },
+  "5": {
+    "step": "5",
+    "parent_step": "2",
+    "action_name": "create_customer_action"
+  },
+  "6": {
+    "step": "6",
+    "parent_step": "2",
+    "action_name": "update_customer_action"
+  },
+  "7": {
+    "step": "7",
+    "parent_step": "2",
+    "action_name": "delete_customer_action"
+  },
+  "8": {
+    "step": "8",
+    "parent_step": "3",
+    "action_name": "create_meter_action"
+  },
+  "9": {
+    "step": "9",
+    "parent_step": "3",
+    "action_name": "update_meter_action"
+  },
+  "10": {
+    "step": "10",
+    "parent_step": "3",
+    "action_name": "delete_meter_action"
+  },
+  "11": {
+    "step": "11",
+    "parent_step": "4",
+    "action_name": "create_price_action"
+  },
+  "12": {
+    "step": "12",
+    "parent_step": "4",
+    "action_name": "update_price_action"
+  },
+  "13": {
+    "step": "13",
+    "parent_step": "4",
+    "action_name": "delete_price_action"
+  },
+  "14": {
+    "step": "14",
+    "parent_step": "1",
+    "action_name": "calculate_used_meter_of_specific_month_action"
+  },
+  "15": {
+    "step": "15",
+    "parent_step": "1",
+    "action_name": "show_operation_data_menu_action"
+  },
+  "16": {
+    "step": "16",
+    "parent_step": "1",
+    "action_name": "show_search_menu_action"
+  },
+  "17": {
+    "step": "17",
+    "parent_step": "16",
+    "action_name": "search_customer_action"
+  },
+  "18": {
+    "step": "18",
+    "parent_step": "16",
+    "action_name": "search_meter_action"
+  },
+  "19": {
+    "step": "19",
+    "parent_step": "16",
+    "action_name": "search_price_action"
+  },
+  "20": {
+    "step": "20",
+    "parent_step": "22",
+    "action_name": "calculate_electricity_price_of_specific_month_action"
+  },
+  "21": {
+    "step": "21",
+    "parent_step": "1",
+    "action_name": "print_bill_action"
+  },
+  "22": {
+    "step": "22",
+    "parent_step": "1",
+    "action_name": "show_menu_calculate_electricity"
+  },
+  "23": {
+    "step": "23",
+    "parent_step": "22",
+    "action_name": "show_calculate_electricity_bill_recently"
+  }
+}
