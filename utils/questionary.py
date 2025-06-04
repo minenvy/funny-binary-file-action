@@ -24,7 +24,7 @@ def get_number_answer(question: str) -> float:
     print_error(invalid_message)
     return get_number_answer(question)
 
-def get_selection_answer(question: str, choices: List[Dict[str, str]], can_exit: bool = False) -> int:
+def get_selection_answer(question: str, choices: List[Dict[str, str]], can_exit: bool = False) -> str:
   print("\033[32m" + question + "\033[0m")
   for i, choice in enumerate(choices):
     print(f"{i + 1}. {choice['option']}")
@@ -34,9 +34,9 @@ def get_selection_answer(question: str, choices: List[Dict[str, str]], can_exit:
   choice_index = input(f"Chon mot gia tri (0-{number_of_questions}): ")
 
   if '0' < choice_index <= str(number_of_questions):
-    return int(choices[int(choice_index) - 1]['next_step'])
+    return choices[int(choice_index) - 1]['next_step']
   elif choice_index == '0':
-    return 0
+    return '0'
   else:
     print_error(invalid_message)
     return get_selection_answer(question, choices)  

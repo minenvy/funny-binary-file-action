@@ -38,3 +38,123 @@ He thong: 0. Thoat
 He thong: Chon mot gia tri (0-5): 
 Nguoi dung: 0
 He thong: Thoat chuong trinh!
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Thoat
+He thong: Chon mot gia tri (0-5): 
+Nguoi dung: 7
+He thong: Du lieu khong hop le. Vui long chon lai.
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-5): 
+Nguoi dung: 1
+He thong: Thao tac du lieu: 
+He thong: 1. Thao tac khach hang
+He thong: 2. Thao tac chi so dien
+He thong: 3. Thao tac gia dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 2
+He thong: Menu chi so dien: 
+He thong: 1. Them chi so dien
+He thong: 2. Cap nhat chi so dien
+He thong: 3. Xoa chi so dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 1
+He thong: Them chi so dien
+He thong: Nhap ma khach hang: 
+Nguoi dung: 1
+He thong: Traceback (most recent call last):
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/main.py", line 12, in <module>
+    next_step = action()
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/utils/action.py", line 133, in create_meter_action
+    electricity_index = float(get_text_answer_with_validation[1;31m("Nhap chi so dien: ", float, "Chi so dien khong hop le, moi nhap lai"))
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/utils/questionary.py", line 13, in get_text_answer_with_validation
+    text = input(question)
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/utils/system.py", line 34, in custom_input
+    user_input = original_input()
+
+He thong: [1;35mKeyboardInterrupt
+
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Thoat
+He thong: Traceback (most recent call last):
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/main.py", line 12, in <module>
+    next_step = action()
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/utils/action.py", line 12, in show_main_menu_action
+    return get_selection_answer(
+      "Menu chinh: ",
+    ...<22 lines>...
+      can_exit = True
+    )
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/utils/questionary.py", line 34, in get_selection_answer
+    choice_index = input(f"Chon mot gia tri (0-{number_of_questions}): ")
+
+He thong:   File "/Users/jethro/Desktop/WorkSpace/company/funny-binary-file-action/utils/system.py", line 34, in custom_input
+    user_input = original_input()
+
+He thong: [1;35mKeyboardInterrupt
+
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Thoat
+He thong: Chon mot gia tri (0-5): 
+Nguoi dung: 1
+He thong: Thao tac du lieu: 
+He thong: 1. Thao tac khach hang
+He thong: 2. Thao tac chi so dien
+He thong: 3. Thao tac gia dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 2
+He thong: Menu chi so dien: 
+He thong: 1. Them chi so dien
+He thong: 2. Cap nhat chi so dien
+He thong: 3. Xoa chi so dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 0
+He thong: Thao tac du lieu: 
+He thong: 1. Thao tac khach hang
+He thong: 2. Thao tac chi so dien
+He thong: 3. Thao tac gia dien
+He thong: 0. Tro lai
+He thong: Chon mot gia tri (0-3): 
+Nguoi dung: 0
+He thong: Menu chinh: 
+He thong: 1. Thao tac du lieu
+He thong: 2. Tinh dien nang tieu thu cua mot khach hang
+He thong: 3. Tim kiem du lieu
+He thong: 4. Tinh tien dien trong ky cua mot khach hang
+He thong: 5. In hoa don tien dien trong ky cua mot khach hang
+He thong: 0. Thoat
+He thong: Chon mot gia tri (0-5): 
+Nguoi dung: 0
+He thong: Thoat chuong trinh!

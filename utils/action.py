@@ -4,7 +4,7 @@ from services.meter import Meter, MeterUpdate, create_meter, delete_meter, get_l
 from services.price import Price, PriceUpdate, create_price, delete_price, get_price_by_level, update_price
 from utils.date import validate_cycle, validate_date_string
 from utils.file import read_list_text_from_binary_file, rewrite_list_text_to_binary_file, write_to_empty_text_file
-from utils.price import calculate_price_of_electricity, calculate_used_meter_of_cycle, get_previous_cycle_meter
+from utils.price import calculate_price_of_electricity, calculate_used_meter_of_cycle, get_previous_cycle_meter, read_vietnamese_number
 from utils.questionary import get_selection_answer, get_text_answer_with_validation
 from utils.system import print_error, print_title
 
@@ -324,3 +324,5 @@ def print_bill_action():
     print(f"Tu ngay {previous_meter['closing_date'] if previous_meter else 'N/A'} den {latest_meter['closing_date'] if latest_meter else 'N/A'}")
     print(f"Chi so dien da su dung ky {latest_cycle}: {used_meter}")
     print(f"Tong tien dien ky {latest_cycle}: {total}")
+    print(f"Tong tien bang chu: {read_vietnamese_number(total)}")
+    

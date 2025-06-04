@@ -55,3 +55,62 @@ def calculate_price_of_electricity(customer_id: str, cycle: str):
 
   return total
 
+def read_vietnamese_number(number: int) -> str:
+    if not (0 <= number < 10**15):
+        return "Số không hợp lệ (chỉ hỗ trợ đến 15 chữ số)."
+
+    units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"]
+    nums = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"]
+
+    def read_three_digits(n):
+        hundred = n // 100
+        ten = (n % 100) // 10
+        unit = n % 10
+
+        result = []
+
+        if hundred != 0:
+            result.append(f"{nums[hundred]} trăm")
+        elif ten != 0 or unit != 0:
+            result.append("không trăm")
+
+        if ten == 0:
+            if unit != 0:
+                result.append("lẻ")
+        elif ten == 1:
+            result.append("mười")
+        else:
+            result.append(f"{nums[ten]} mươi")
+
+        if unit != 0:
+            if ten != 0:
+                if unit == 1:
+                    result.append("mốt")
+                elif unit == 5:
+                    result.append("lăm")
+                else:
+                    result.append(nums[unit])
+            else:
+                result.append(nums[unit])
+
+        return " ".join(result)
+
+    if number == 0:
+        return nums[0]
+
+    parts = []
+    i = 0
+    while number > 0:
+        three = number % 1000
+        if three != 0:
+            part = read_three_digits(three)
+            if units[i]:
+                part += f" {units[i]}"
+            parts.insert(0, part)
+        elif i == 3 and any(p.strip() for p in parts):  # For "tỷ" if in middle
+            parts.insert(0, f"{nums[0]} tỷ")
+        number //= 1000
+        i += 1
+
+    return " ".join(parts).strip()
+

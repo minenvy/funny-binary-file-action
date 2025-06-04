@@ -7,8 +7,8 @@ make_custom_in_out()
 current_step = INITIAL_STEP
 menu = load_menu_data()
 
-while current_step != '0':
-  action = get_action_by_name(menu[str(current_step)]['action_name'])
+while current_step != EXIT_STEP:
+  action = get_action_by_name(menu[current_step]['action_name'])
   next_step = action()
 
   if current_step == INITIAL_STEP and next_step == EXIT_STEP:
