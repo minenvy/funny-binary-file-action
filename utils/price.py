@@ -62,36 +62,42 @@ def read_vietnamese_number(number: int) -> str:
     units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"]
     nums = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"]
 
-    def read_three_digits(n):
+    def read_three_digits(n: int, full: bool) -> str:
         hundred = n // 100
         ten = (n % 100) // 10
         unit = n % 10
 
         result = []
 
+        # Hundreds
         if hundred != 0:
             result.append(f"{nums[hundred]} trăm")
-        elif ten != 0 or unit != 0:
+        elif full and (ten != 0 or unit != 0):
             result.append("không trăm")
 
+        # Tens
         if ten == 0:
-            if unit != 0:
+            if unit != 0 and full:
                 result.append("lẻ")
         elif ten == 1:
             result.append("mười")
         else:
             result.append(f"{nums[ten]} mươi")
 
+        # Units
         if unit != 0:
-            if ten != 0:
+            if ten == 0 or ten == 1:
+                if unit == 5 and ten >= 1:
+                    result.append("lăm")
+                else:
+                    result.append(nums[unit])
+            else:
                 if unit == 1:
                     result.append("mốt")
                 elif unit == 5:
                     result.append("lăm")
                 else:
                     result.append(nums[unit])
-            else:
-                result.append(nums[unit])
 
         return " ".join(result)
 
@@ -100,17 +106,27 @@ def read_vietnamese_number(number: int) -> str:
 
     parts = []
     i = 0
+    group_values = []
+
+    # Break number into 3-digit groups
     while number > 0:
-        three = number % 1000
-        if three != 0:
-            part = read_three_digits(three)
-            if units[i]:
-                part += f" {units[i]}"
-            parts.insert(0, part)
-        elif i == 3 and any(p.strip() for p in parts):  # For "tỷ" if in middle
-            parts.insert(0, f"{nums[0]} tỷ")
+        group_values.insert(0, number % 1000)
         number //= 1000
-        i += 1
+
+    total_groups = len(group_values)
+
+    for idx, val in enumerate(group_values):
+        unit_label = units[total_groups - idx - 1]
+        # full=True if there's a non-zero group before this
+        full = (idx > 0 and any(g > 0 for g in group_values[:idx]))
+        if val != 0:
+            text = read_three_digits(val, full)
+            if unit_label:
+                text += f" {unit_label}"
+            parts.append(text)
+        else:
+            # Handle "không tỷ" in the middle of larger numbers
+            if unit_label == "tỷ" and any(g > 0 for g in group_values[idx + 1:]):
+                parts.append(f"{nums[0]} {unit_label}")
 
     return " ".join(parts).strip()
-
