@@ -96,22 +96,12 @@
   },
   "20": {
     "step": "20",
-    "parent_step": "22",
+    "parent_step": "1",
     "action_name": "calculate_electricity_price_of_specific_month_action"
   },
   "21": {
     "step": "21",
     "parent_step": "1",
-    "action_name": "print_bill_action"
-  },
-  "22": {
-    "step": "22",
-    "parent_step": "1",
-    "action_name": "show_menu_calculate_electricity"
-  },
-  "23": {
-    "step": "23",
-    "parent_step": "22",
     "action_name": "show_calculate_electricity_bill_recently"
   }
 }

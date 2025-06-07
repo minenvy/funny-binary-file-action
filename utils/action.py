@@ -1,4 +1,5 @@
-from constants.index import FILE_DATA_NAMES, DEFAULT_CYCLE
+from constants.index import DEFAULT_CYCLE, FILE_DATA_NAMES, TAX
+from services.bill import Bill, find_bill_by_customer_id, update_bill_or_create_if_not_exist
 from services.customer import Customer, CustomerUpdate, create_customer, delete_customer, get_customer_by_id, update_customer
 from services.meter import Meter, MeterUpdate, create_meter, delete_meter, get_latest_cycle_of_customer, get_meter_by_customer_and_cycle, update_meter, validate_cycle_for_meter
 from services.price import Price, PriceUpdate, create_price, delete_price, get_price_by_level, update_price
@@ -265,17 +266,22 @@ def search_meter_action():
 def calculate_electricity_price_of_specific_month_action():
   print_title("Tinh tien dien")
   customer_id = get_text_answer_with_validation("Nhap ma khach hang: ", get_customer_by_id, "Khong tim thay khach hang, moi nhap lai")  
-  cycle = get_text_answer_with_validation("Nhap ky (mm/yyyy): ", validate_cycle, "Ky khong hop le, moi nhap lai")
+  cycle = get_text_answer_with_validation("Nhap ky (mm/yyyy): ", lambda cycle: validate_cycle_for_meter(cycle, customer_id), "Ky khong hop le, moi nhap lai")
 
-  used_meter = calculate_used_meter_of_cycle(customer_id, cycle)
+  latest_meter = get_meter_by_customer_and_cycle(customer_id, cycle)
+  if not latest_meter:
+    print_error(f"Khong tim thay thong tin dien nang ky {cycle}")
+    return
+
+  previous_cycle = get_previous_cycle_meter(customer_id, cycle)
+  previous_meter = None
+  if previous_cycle:
+    previous_meter = get_meter_by_customer_and_cycle(customer_id, previous_cycle)
+  
+  used_meter = latest_meter['electricity_index'] - previous_meter['electricity_index'] if previous_meter else latest_meter['electricity_index']
   total = calculate_price_of_electricity(customer_id, cycle)
 
-  rewrite_list_text_to_binary_file(FILE_DATA_NAMES['hoa_don'], [
-    f"Ma khach hang: {customer_id} \n",
-    f"Ky: {cycle} \n",
-    f"Chi so dien da su dung ky {cycle}: {used_meter} \n",
-    f"Tong tien dien ky {cycle}: {total} \n"
-  ])
+  update_bill_or_create_if_not_exist(Bill(customer_id=customer_id, cycle=cycle, from_date=previous_meter['closing_date'] if previous_meter else 'N/A', to_date=latest_meter['closing_date'] if latest_meter else 'N/A', power_consumption=used_meter, total=total))
   print('Tien dien da duoc ghi vao file HOADON')
 
 def show_menu_calculate_electricity():
@@ -293,36 +299,27 @@ def show_menu_calculate_electricity():
     ]
   )
 
-def show_calculate_electricity_bill_recently():
-  print_title("Hoa don tien dien")
-  print(read_list_text_from_binary_file('HOADON.bin'))
-
 def print_bill_action():
   print_title("In hoa don tien dien")
   customer_id = get_text_answer_with_validation("Nhap ma khach hang: ", get_customer_by_id, "Khong tim thay khach hang, moi nhap lai")
-  latest_cycle = get_latest_cycle_of_customer(customer_id)
 
-  if latest_cycle == DEFAULT_CYCLE:
-    print_error("Khong tim thay thong tin dien nang")
+  bill = find_bill_by_customer_id(customer_id)
+  if not bill:
+    print_error("Khong tim thay thong tin hoa don cua khach hang nay")
+    return
 
   customer = get_customer_by_id(customer_id)
-  latest_meter = get_meter_by_customer_and_cycle(customer_id, latest_cycle)
-  previous_cycle = get_previous_cycle_meter(customer_id, latest_cycle)
-  previous_meter = None
-  if previous_cycle:
-    previous_meter = get_meter_by_customer_and_cycle(customer_id, previous_cycle)
-  
-  used_meter = calculate_used_meter_of_cycle(customer_id, latest_cycle)
-  total = calculate_price_of_electricity(customer_id, latest_cycle)
+  used_meter = bill['power_consumption']
+  total = bill['total'] * (1 + TAX)
 
   if customer:
     print(f"Ma khach hang: {customer_id}")
     print(f"Ten khach hang: {customer['name']}")
     print(f"Dia chi khach hang: {customer['address']}")
     print(f"Ma so cong to: {customer['meter_id']}")
-    print(f"Ky: {latest_cycle}")
-    print(f"Tu ngay {previous_meter['closing_date'] if previous_meter else 'N/A'} den {latest_meter['closing_date'] if latest_meter else 'N/A'}")
-    print(f"Chi so dien da su dung ky {latest_cycle}: {used_meter}")
-    print(f"Tong tien dien ky {latest_cycle}: {total}")
+    print(f"Ky: {bill['cycle']}")
+    print(f"Tu ngay {bill['from_date'] or 'N/A'} den {bill['end_date'] or 'N/A'}")
+    print(f"Chi so dien da su dung ky {bill['cycle']}: {used_meter}")
+    print(f"Tong tien dien ky {bill['cycle']}: {total}")
     print(f"Tong tien bang chu: {read_vietnamese_number(total)}")
     
