@@ -136,7 +136,7 @@ def create_meter_action():
   cycle = get_text_answer_with_validation("Nhap ky (mm/yyyy): ", lambda cycle: validate_cycle_for_meter(cycle, customer_id), "Ky khong hop le, moi nhap lai")
 
   create_meter(Meter(customer_id=customer_id, electricity_index=electricity_index, closing_date=closing_date, cycle=cycle))
-  print("Them khach hang thanh cong")
+  print("Them chi so dien thanh cong")
 
 def update_meter_action():
   print_title("Cap nhat chi so dien")
@@ -276,7 +276,7 @@ def calculate_electricity_price_of_specific_month_action():
   previous_cycle = get_previous_cycle_meter(customer_id, cycle)
   previous_meter = None
   if previous_cycle:
-    previous_meter = get_meter_by_customer_and_cycle(customer_id, previous_cycle)
+    previous_meter = get_meter_by_customer_and_cycle(customer_id, previous_cycle['cycle'])
   
   used_meter = latest_meter['electricity_index'] - previous_meter['electricity_index'] if previous_meter else latest_meter['electricity_index']
   total = calculate_price_of_electricity(customer_id, cycle)
@@ -299,7 +299,7 @@ def show_menu_calculate_electricity():
     ]
   )
 
-def print_bill_action():
+def show_calculate_electricity_bill_recently():
   print_title("In hoa don tien dien")
   customer_id = get_text_answer_with_validation("Nhap ma khach hang: ", get_customer_by_id, "Khong tim thay khach hang, moi nhap lai")
 
@@ -318,8 +318,10 @@ def print_bill_action():
     print(f"Dia chi khach hang: {customer['address']}")
     print(f"Ma so cong to: {customer['meter_id']}")
     print(f"Ky: {bill['cycle']}")
-    print(f"Tu ngay {bill['from_date'] or 'N/A'} den {bill['end_date'] or 'N/A'}")
+    print(f"Tu ngay {bill['from_date'] or 'N/A'} den {bill['to_date'] or 'N/A'}")
     print(f"Chi so dien da su dung ky {bill['cycle']}: {used_meter}")
-    print(f"Tong tien dien ky {bill['cycle']}: {total}")
-    print(f"Tong tien bang chu: {read_vietnamese_number(total)}")
+    print(f"Tong tien dien ky {bill['cycle']} (chua bao gom thue): {bill['total']}")
+    print(f"Thue: {100 * TAX}%")
+    print(f"Tong tien dien ky {bill['cycle']} (bao gom thue): {total}")
+    print(f"Tong tien bang chu: {read_vietnamese_number(int(total))}")
     
