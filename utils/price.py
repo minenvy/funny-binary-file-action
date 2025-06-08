@@ -12,10 +12,13 @@ def get_previous_cycle_meter(customer_id: str, cycle: str):
   if total_used_cycle_electric_of_customer == 1:
     return None
 
-  while previous_cycle_meter == None:
+  loop_count = 0
+  while previous_cycle_meter == None and loop_count <= total_used_cycle_electric_of_customer:
     previous_cycle = get_previous_cycle(current_previous_cycle)
     previous_cycle_meter = get_meter_by_customer_and_cycle(customer_id, previous_cycle)
+    
     current_previous_cycle = previous_cycle
+    loop_count += 1
   
   return previous_cycle_meter
 

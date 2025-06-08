@@ -320,8 +320,8 @@ def show_calculate_electricity_bill_recently():
     print(f"Ky: {bill['cycle']}")
     print(f"Tu ngay {bill['from_date'] or 'N/A'} den {bill['to_date'] or 'N/A'}")
     print(f"Chi so dien da su dung ky {bill['cycle']}: {used_meter}")
-    print(f"Tong tien dien ky {bill['cycle']} (chua bao gom thue): {bill['total']}")
+    print(f"Tong tien dien ky {bill['cycle']} (chua bao gom thue): {int(bill['total'])}")
     print(f"Thue: {100 * TAX}%")
-    print(f"Tong tien dien ky {bill['cycle']} (bao gom thue): {total}")
+    print(f"Tong tien dien ky {bill['cycle']} (bao gom thue): {int(total)}")
     print(f"Tong tien bang chu: {read_vietnamese_number(int(total))}")
     
