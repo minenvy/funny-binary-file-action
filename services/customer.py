@@ -22,7 +22,6 @@ def create_customer(customer: Customer):
   customers = read_binary_file(customer_file_name)
 
   if (customer.id in customers):
-    print("Customer already exists")
     return
   
   new_customer = asdict(customer)

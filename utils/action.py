@@ -1,10 +1,9 @@
-from constants.index import DEFAULT_CYCLE, FILE_DATA_NAMES, TAX
+from constants.index import TAX
 from services.bill import Bill, find_bill_by_customer_id, update_bill_or_create_if_not_exist
 from services.customer import Customer, CustomerUpdate, create_customer, delete_customer, get_customer_by_id, update_customer
-from services.meter import Meter, MeterUpdate, create_meter, delete_meter, get_latest_cycle_of_customer, get_meter_by_customer_and_cycle, update_meter, validate_cycle_for_meter
+from services.meter import Meter, MeterUpdate, create_meter, delete_meter, get_meter_by_customer_and_cycle, update_meter, validate_cycle_for_meter
 from services.price import Price, PriceUpdate, create_price, delete_price, get_price_by_level, update_price
 from utils.date import validate_cycle, validate_date_string
-from utils.file import read_list_text_from_binary_file, rewrite_list_text_to_binary_file, write_to_empty_text_file
 from utils.price import calculate_price_of_electricity, calculate_used_meter_of_cycle, get_previous_cycle_meter, read_vietnamese_number
 from utils.questionary import get_selection_answer, get_text_answer_with_validation
 from utils.system import print_error, print_title
@@ -101,8 +100,9 @@ def create_customer_action():
   customer_address = input("Nhap dia chi khach hang: ")
   customer_meter_id = input("Nhap ma cong to dien khach hang: ")
 
-  create_customer(Customer(id=customer_id, name=customer_name, address=customer_address, meter_id=customer_meter_id))
-  print("Them khach hang thanh cong")
+  customer = create_customer(Customer(id=customer_id, name=customer_name, address=customer_address, meter_id=customer_meter_id))
+  if customer:
+    print("Them khach hang thanh cong")
 
 def update_customer_action():
   print_title("Cap nhat khach hang")
@@ -133,17 +133,18 @@ def create_meter_action():
   customer_id = input("Nhap ma khach hang: ")
   electricity_index = float(get_text_answer_with_validation("Nhap chi so dien: ", float, "Chi so dien khong hop le, moi nhap lai"))
   closing_date = get_text_answer_with_validation("Nhap ngay chot (dd/mm/yyyy): ", validate_date_string)
-  cycle = get_text_answer_with_validation("Nhap ky (mm/yyyy): ", lambda cycle: validate_cycle_for_meter(cycle, customer_id), "Ky khong hop le, moi nhap lai")
+  cycle = get_text_answer_with_validation("Nhap ky (mm/yyyy): ", lambda cycle: validate_cycle_for_meter(cycle, customer_id), "Ky khong hop le hoac da bi trung lap, moi nhap lai")
 
-  create_meter(Meter(customer_id=customer_id, electricity_index=electricity_index, closing_date=closing_date, cycle=cycle))
-  print("Them chi so dien thanh cong")
+  meter = create_meter(Meter(customer_id=customer_id, electricity_index=electricity_index, closing_date=closing_date, cycle=cycle))
+  if meter:
+    print("Them chi so dien thanh cong")
 
 def update_meter_action():
   print_title("Cap nhat chi so dien")
   customer_id = input("Nhap ma khach hang: ")
   cycle = get_text_answer_with_validation("Nhap ky (mm/yyyy): ", lambda cycle: get_meter_by_customer_and_cycle(customer_id, cycle), "Khong tim thay thong tin dien ky nay, moi nhap lai")
   electricity_index = input("Nhap chi so dien (Enter de bo qua): ")
-  closing_date =input("Nhap ngay chot (dd/mm/yyyy): ")
+  closing_date =input("Nhap ngay chot (dd/mm/yyyy) (Enter de bo qua): ")
 
   updated_meter = {}
   if (electricity_index != ""):
@@ -164,13 +165,14 @@ def delete_meter_action():
 
 def create_price_action():
   print_title("Them gia dien")
-  level = get_text_answer_with_validation("Nhap bac gia dien: ", int, "Bac gia dien phai la mot so nguyen, moi nhap lai")
+  level = get_text_answer_with_validation("Nhap bac gia dien: ", lambda level: int(level) and get_price_by_level(level) == None, "Bac gia dien phai la mot so nguyen va khong trung lap, moi nhap lai")
   from_index = float(get_text_answer_with_validation("Nhap chi so dau: ", float, "Chi so dau khong hop le, moi nhap lai"))
   to_index = float(get_text_answer_with_validation("Nhap chi so cuoi: ", float, "Chi so cuoi khong hop le, moi nhap lai"))
   price = float(get_text_answer_with_validation("Nhap gia tien/so dien: ", float, "Gia tien khong hop le, moi nhap lai"))
 
-  create_price(Price(level=level, from_index=from_index, to_index=to_index, price=price))
-  print("Them gia dien thanh cong")
+  price = create_price(Price(level=level, from_index=from_index, to_index=to_index, price=price))
+  if price:
+    print("Them gia dien thanh cong")
 
 def update_price_action():
   print_title("Cap nhat gia dien")

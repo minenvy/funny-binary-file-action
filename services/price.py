@@ -22,7 +22,6 @@ def create_price(price: Price):
   prices = read_binary_file(price_file_name)
 
   if (price.level in prices):
-    print("Price already exists")
     return
   
   new_price = asdict(price)

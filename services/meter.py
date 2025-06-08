@@ -30,7 +30,6 @@ def create_meter(meter: Meter):
 
   meter_id = get_meter_id(meter.customer_id, meter.cycle)
   if (meter_id in meters):
-    print("Meter already exists")
     return
   
   new_meter = asdict(meter)
@@ -88,9 +87,12 @@ def delete_meter(customer_id: str, cycle: str):
 def validate_cycle_for_meter(cycle: str, customer_id: str):
   is_valid_cycle_format = validate_cycle(cycle)
   if not is_valid_cycle_format:
-    exist_meter = get_meter_by_customer_and_cycle(customer_id, cycle)
-    if exist_meter != None:
-      return False
+    return False
+  
+  exist_meter = get_meter_by_customer_and_cycle(customer_id, cycle)
+  if exist_meter != None:
+    return False
+  
   return True
 
 def get_latest_cycle_of_customer(customer_id: str):
